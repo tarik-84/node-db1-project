@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "watch": "nodemon --require dotenv/config index.js",
+    "start": "node index.js"
   },
   "repository": "https://github.com/LambdaSchool/webdb-i-challenge",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "knex": "^0.20.13",
     "pg": "^8.0.2",
