@@ -5,6 +5,7 @@ const db = require("../data/dbConfig.js");
 const server = express();
 
 server.use(express.json());
+server.use(cors())
 
 
 server.get('/', (req, res) => {
