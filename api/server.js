@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require('cors')
-const db = require("../data/dbConfig.js");
+const data = require("./helper");
 
 const server = express();
 
@@ -14,18 +14,11 @@ server.get('/', (req, res) => {
     })
   });
 
-function find(query = {}) {
-	const { limit = 100, sortBy = "id", sortDir = "asc" } = query
 
-	return db("accounts")
-		.orderBy(sortBy, sortDir)
-		.limit(limit)
-		.select()
-}
 
 server.get('/accounts', async (req, res, next) => {
     try {
-		const accounts = await find({
+		const accounts = await data.find({
             limit: req.query.limit,
             sortBy: req.query.sortBy,
             sortDir: req.query.sortDir
@@ -39,11 +32,7 @@ server.get('/accounts', async (req, res, next) => {
 
 server.get('/accounts/:id', async (req, res, next) => {
     try {
-        const [account] = await db.select("*")
-                                  .from("accounts")
-                                  .where("id", req.params.id)
-                                  .limit (1)
-
+        const account = await data.findById(req.params.id)
 		res.json(account)
 	} catch (err) {
 		next(err)
@@ -56,10 +45,7 @@ server.post('/accounts', async (req, res, next) => {
 			name: req.body.name,
 			budget: req.body.budget,
         }
-        
-		const [accountId] = await db.insert(payload).into("accounts")
-		const account = await db.first("*").from("accounts").where("id", accountId)
-
+		const account = await data.add(payload)
 		res.status(201).json(account)
 	} catch (err) {
 		next(err)
@@ -73,9 +59,7 @@ server.put('/accounts/:id', async (req, res, next) => {
 			budget: req.body.budget,
         }
         
-		await db("accounts").update(payload).where("id", req.params.id)
-		const account = await db.first("*").from("accounts").where("id", req.params.id)
-
+		const account = await data.update(req.params.id, payload)
 		res.json(account)
 	} catch (err) {
 		next(err)
@@ -84,8 +68,7 @@ server.put('/accounts/:id', async (req, res, next) => {
 
 server.delete('/accounts/:id', async (req, res, next) => {
     try {
-		await db("accounts").where("id", req.params.id).delete()
-
+		await data.remove(req.params.id)
 		res.status(202).json({
             message:'the account has been removed'
         })
