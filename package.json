@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "watch": "nodemon --require dotenv/config index.js",
+    "start": "node index.js"
   },
   "repository": "https://github.com/LambdaSchool/webdb-i-challenge",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "knex": "^0.20.13",
-    "pg": "^8.0.2",
+    "pg": "^8.2.1",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {

@@ -18,10 +18,10 @@ module.exports = {
   production: {
     client: "pg",
     connection: {
-      host: "localhost", // if the server is not running on your computer provide the network address
-      database: "the name of the database to use in the postgres server", // <-- update
-      user: "a user that has access to the server and database", // <-- update
-      password: "the password for the user", // <-- update
+      host: "ec2-50-17-90-177.compute-1.amazonaws.com", // if the server is not running on your computer provide the network address
+      database: "d9ebda5f96vput", // <-- update
+      user: "zkvcptrtcqgpen", // <-- update
+      password: "c63723e281479451c7825c2d61db56264152869660390f85ff48067337d5516d", // <-- update
     },
     pool: {
       min: 2,
@@ -36,3 +36,4 @@ module.exports = {
     },
   },
 };
+
